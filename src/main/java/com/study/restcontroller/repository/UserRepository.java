@@ -18,7 +18,7 @@ public class UserRepository {
     }
 
     @Transactional
-    public User getById(int id) {
+    public User getById(int id) { // updateName과 delete의 공통 메소드 분리
         return userJdbcRepository.findById(id).orElseThrow(() -> new RuntimeException("사용자가 없습니다."));
     }
 
@@ -28,7 +28,7 @@ public class UserRepository {
     }
 
     @Transactional
-    public User updateName(int id, String name) {
+    public User updateName(int id, String name) { // user 객체를 찾아서 id에 맞게 바뀐 이름을 save
         User byId = getById(id);
         byId.updateName(name);
         userJdbcRepository.save(byId);
@@ -36,7 +36,7 @@ public class UserRepository {
     }
 
     @Transactional
-    public User delete(int id) {
+    public User delete(int id) { // id를 찾아서 delete
         User byId = getById(id);
         byId.delete();
         userJdbcRepository.delete(byId);
